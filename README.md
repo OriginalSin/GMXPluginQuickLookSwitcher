@@ -1,0 +1,2 @@
+# GMXPluginQuickLookSwitcher
+QuickLookSwitcher 
