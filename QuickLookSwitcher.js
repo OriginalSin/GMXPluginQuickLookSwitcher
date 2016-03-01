@@ -26,7 +26,6 @@
         if (layer instanceof L.gmx.VectorLayer) {
             var prop = layer.getGmxProperties();
             if (prop.Quicklook) {
-                // console.log('L.gmx.VectorLayer', prop);
                 var layerName = prop.name;
                 if (!clickedIds[layerName]) {
                     clickedIds[layerName] = { ids: {}, event: false };
@@ -66,17 +65,10 @@
     var publicInterface = {
         pluginName: pluginName,
         afterViewer: function(params, map) {
-            var path = gmxCore.getModulePath(pluginName);
-            var _params = $.extend({
-                regularImage: 'satellite.png',
-                activeImage: 'satellite_a.png'
-            }, params);
-            
             var icon = new L.Control.gmxIcon({
                 id: pluginName, 
                 togglable: true,
-                regularImageUrl: _params.regularImage.search(/^https?:\/\//) !== -1 ? _params.regularImage : path + _params.regularImage,
-                activeImageUrl:  _params.activeImage.search(/^https?:\/\//) !== -1 ? _params.activeImage : path + _params.activeImage,
+                className: 'icon-eye-off',
                 title: _gtxt(pluginName + '.iconTitle')
             }).on('statechange', function(ev) {
                 isActive = ev.target.options.isActive;
@@ -85,5 +77,8 @@
             nsGmx.leafletMap.addControl(icon);
         }
     };
-    gmxCore.addModule(pluginName, publicInterface);
+    gmxCore.addModule(pluginName, publicInterface, {
+        css: pluginName + '.css'
+    });
+    
 })();
